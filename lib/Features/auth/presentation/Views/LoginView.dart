@@ -1,7 +1,7 @@
-import 'package:e__commerce/Features/auth/widgets/CustomEmailTextFormField.dart';
-import 'package:e__commerce/Features/auth/widgets/CustomPasswordTextFormField.dart';
-import 'package:e__commerce/Features/auth/widgets/SignUpWith.dart';
-import 'package:e__commerce/Features/auth/widgets/customButton.dart';
+import 'package:e__commerce/Features/auth/presentation/widgets/CustomEmailTextFormField.dart';
+import 'package:e__commerce/Features/auth/presentation/widgets/CustomPasswordTextFormField.dart';
+import 'package:e__commerce/Features/auth/presentation/widgets/SignUpWith.dart';
+import 'package:e__commerce/Shared/customButton.dart';
 import 'package:e__commerce/core/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -78,8 +78,8 @@ class LoginView extends StatelessWidget {
                 ),
               ),
             const SizedBox(height: 20,),
-               const CustomButton(
-                  customButtonText: "Login", routeName: 'routeName'),
+                CustomButton(
+                  customButtonText: "Login", onPressed: (){}),
                   const SizedBox(height: 8,),
                   GestureDetector(child:
               const Text('Don\'t have account yet?',style: TextStyle(color: AppColors.kPrimaryColor,fontSize: 16,fontWeight: FontWeight.w500),),),

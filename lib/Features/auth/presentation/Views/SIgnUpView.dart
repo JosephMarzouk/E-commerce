@@ -1,7 +1,7 @@
-import 'package:e__commerce/Features/auth/widgets/CustomEmailTextFormField.dart';
-import 'package:e__commerce/Features/auth/widgets/CustomPasswordTextFormField.dart';
-import 'package:e__commerce/Features/auth/widgets/SignUpWith.dart';
-import 'package:e__commerce/Features/auth/widgets/customButton.dart';
+import 'package:e__commerce/Features/auth/presentation/widgets/CustomEmailTextFormField.dart';
+import 'package:e__commerce/Features/auth/presentation/widgets/CustomPasswordTextFormField.dart';
+import 'package:e__commerce/Features/auth/presentation/widgets/SignUpWith.dart';
+import 'package:e__commerce/Shared/customButton.dart';
 import 'package:e__commerce/core/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -92,8 +92,8 @@ class SignUpView extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    const CustomButton(
-                        customButtonText: "SignUp", routeName: 'routeName'),
+                     CustomButton(
+                        customButtonText: "SignUp", onPressed:(){} ,),
                     const SizedBox(
                       height: 8,
                     ),

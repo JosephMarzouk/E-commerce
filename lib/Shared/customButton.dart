@@ -3,16 +3,15 @@ import 'package:flutter/material.dart';
 
   
 class CustomButton extends StatelessWidget {
-  const CustomButton({required this.customButtonText,required this.routeName});
+  const CustomButton({required this.customButtonText, required this.onPressed});
   final String customButtonText;
-  final String routeName;
+
   
+ final void Function()?onPressed;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.pushNamed(context, routeName);
-      },
+      onTap: onPressed,
       child: Container(
           child:  Center(
               child: Text(

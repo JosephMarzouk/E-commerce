@@ -9,6 +9,16 @@ class StoreView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
+        SizedBox(height: 20,),
+        Center(
+          child: Text(
+            'Welcome to the Store ☺️',
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
         const CustomSearchbar(),
         RecentProductListView(),
         

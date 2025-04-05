@@ -1,6 +1,6 @@
 import 'package:e__commerce/Features/Favorite/presentation/Views/FavoriteView.dart';
 import 'package:e__commerce/Features/Home/presentation/Views/HomeView.dart';
-import 'package:e__commerce/Features/Profile/data/manager/cubit/nav_bar_cubit.dart';
+import 'package:e__commerce/Features/NavBar/data/manager/cubit/nav_bar_cubit.dart';
 import 'package:e__commerce/Features/Profile/presentation/Views/Profile.dart';
 import 'package:e__commerce/Features/Store/presentation/Views/StoreView.dart';
 import 'package:e__commerce/core/app_colors.dart';

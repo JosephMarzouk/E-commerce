@@ -1,3 +1,5 @@
+import 'package:e__commerce/Features/Profile/presentation/Views/EditNameView.dart';
+import 'package:e__commerce/Features/Profile/presentation/Views/MyOrdersView.dart';
 import 'package:e__commerce/Shared/CustomRowButton.dart';
 import 'package:e__commerce/core/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,7 @@ class ProfileView extends StatelessWidget {
     return Center(
       child: SizedBox(
         height: screenHight * .65,
-        child: const Card(
+        child:  Card(
           color: AppColors.kWhiteColor,
           margin: const EdgeInsets.all(24),
           shape: const RoundedRectangleBorder(
@@ -49,12 +51,16 @@ class ProfileView extends StatelessWidget {
                 const SizedBox(
                   height: 25,
                 ),
-                CustomRowBtn(icon: Icons.person, text: "Edit Name"),
+                CustomRowBtn(icon: Icons.person, text: "Edit Name",onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => EditNameView()));
+                },),
                 const SizedBox(
                   height: 10,
                 ),
                 CustomRowBtn(
-                    icon: Icons.shopping_basket_outlined, text: "My Orders"),
+                    icon: Icons.shopping_basket_outlined, text: "My Orders",onTap: () {
+                       Navigator.push(context, MaterialPageRoute(builder: (context) => MyOrdersView()));
+                    },),
                 const SizedBox(
                   height: 10,
                 ),

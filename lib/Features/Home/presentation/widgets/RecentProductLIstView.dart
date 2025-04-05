@@ -1,3 +1,4 @@
+import 'package:e__commerce/Features/Home/presentation/Views/ProductDetails.dart';
 import 'package:e__commerce/Features/Home/presentation/widgets/ProductCard.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,9 @@ final bool? shrinkWrap;
         itemBuilder: (count, index) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 10),
-            child: ProductCard(),
+            child: GestureDetector(
+              onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetails()));},
+              child: ProductCard()),
           );
         },
         itemCount: 5,

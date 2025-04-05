@@ -1,6 +1,6 @@
+import 'package:e__commerce/Features/Profile/presentation/widgets/CustomAppBar.dart';
 import 'package:e__commerce/Features/Profile/presentation/widgets/CustomTextField.dart';
 import 'package:e__commerce/Shared/CustomSmallButton.dart';
-import 'package:e__commerce/core/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class EditNameView extends StatelessWidget {
@@ -10,11 +10,7 @@ class EditNameView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Scaffold(
-        appBar: AppBar(
-            centerTitle: true,
-            title: const Text('Edit Name',style: TextStyle(color: AppColors.kWhiteColor),),
-            backgroundColor: AppColors.kPrimaryColor,
-          ),
+        appBar: buildCustomAppBar(context, "Edit Name"),
         body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
           children: [

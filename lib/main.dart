@@ -1,3 +1,4 @@
+import 'package:e__commerce/Features/Home/presentation/Views/ProductDetails.dart';
 import 'package:e__commerce/Features/NavBar/presentation/Views/MainHomeView.dart';
 import 'package:e__commerce/Features/NavBar/data/manager/cubit/nav_bar_cubit.dart';
 import 'package:e__commerce/Features/auth/presentation/Views/LoginView.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: MainHomeView(),
+        home: ProductDetails(),
       ),
     );
   }

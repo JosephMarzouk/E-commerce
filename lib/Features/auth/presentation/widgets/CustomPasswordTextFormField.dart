@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
 
-class CustomPasswordTextFormField extends StatelessWidget {
-  const CustomPasswordTextFormField({
+class CustomPasswordTextFormField extends StatefulWidget {
+   CustomPasswordTextFormField({
     super.key,
     required bool obscureText,
     required this.passwordController,
@@ -10,36 +10,41 @@ class CustomPasswordTextFormField extends StatelessWidget {
     required this.passwordBorderColor,
   }) : _obscureText = obscureText;
 
-  final bool _obscureText;
+   bool _obscureText;
   final TextEditingController passwordController;
   final Color emailBorderColor;
   final Color passwordBorderColor;
 
   @override
+  State<CustomPasswordTextFormField> createState() => _CustomPasswordTextFormFieldState();
+}
+
+class _CustomPasswordTextFormFieldState extends State<CustomPasswordTextFormField> {
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      obscureText: _obscureText,
-      onChanged: (value) {
-        // BlocProvider.of<LoginCubit>(context).updatePassword(value);
-      },
+      obscureText: widget._obscureText,
+      
       validator: (data) {
         if (data!.isEmpty) {
           return 'this field is required';
         }
       },
-      controller: passwordController,
+      controller: widget.passwordController,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: emailBorderColor),
+          borderSide: BorderSide(color: widget.emailBorderColor),
         ),
         contentPadding:
             const EdgeInsets.symmetric(vertical: 23, horizontal: 15),
         hintText: '********',
         prefixIcon: const Icon(Icons.lock_outline_rounded),
         suffixIcon: IconButton(
-            onPressed: () {},
-            icon: Icon(_obscureText
+            onPressed: () {setState(() {
+              widget._obscureText = !widget._obscureText;
+            });},
+            icon: Icon(widget._obscureText
                 ? Icons.visibility_off_outlined
                 : Icons.remove_red_eye_outlined)),
         label: Text(
@@ -48,11 +53,11 @@ class CustomPasswordTextFormField extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: passwordBorderColor),
+          borderSide: BorderSide(color: widget.passwordBorderColor),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: passwordBorderColor),
+          borderSide: BorderSide(color: widget.passwordBorderColor),
         ),
       ),
     );

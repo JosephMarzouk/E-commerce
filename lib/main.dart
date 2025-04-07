@@ -1,9 +1,11 @@
+import 'package:e__commerce/Features/Home/presentation/Views/HomeView.dart';
 import 'package:e__commerce/Features/Home/presentation/Views/ProductDetails.dart';
 import 'package:e__commerce/Features/NavBar/presentation/Views/MainHomeView.dart';
 import 'package:e__commerce/Features/NavBar/data/manager/cubit/nav_bar_cubit.dart';
 import 'package:e__commerce/Features/auth/data/cubit/AuthCubit/auth_cubit.dart';
 import 'package:e__commerce/Features/auth/presentation/Views/LoginView.dart';
-import 'package:e__commerce/Features/auth/presentation/Views/SIgnUpView.dart';
+import 'package:e__commerce/Features/auth/presentation/Views/SignUpView.dart';
+import 'package:e__commerce/core/Observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -16,6 +18,7 @@ void main() async {
     anonKey:
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFzYnh2eWF4dnJheHBldm5neWp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM4NjMzMDQsImV4cCI6MjA1OTQzOTMwNH0.Z4LXgVoUqucTJ_Ggu-VYeNcB7HVveGIYoA1cPMRI1jE",
   );
+  Bloc.observer = MyObserver();
   runApp(const MyApp());
 }
 
@@ -24,6 +27,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SupabaseClient client = Supabase.instance.client;
     return MultiBlocProvider(
       providers: [
         BlocProvider<NavBarCubit>(
@@ -35,7 +39,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: LoginView(),
+        home: client.auth.currentUser !=null ? MainHomeView(): LoginView(),
       ),
     );
   }

@@ -1,6 +1,8 @@
+
 import 'package:e__commerce/Features/NavBar/presentation/Views/MainHomeView.dart';
 import 'package:e__commerce/Features/auth/data/cubit/AuthCubit/auth_cubit.dart';
-import 'package:e__commerce/Features/auth/data/models/UserModel.dart';
+import 'package:e__commerce/Features/auth/presentation/Views/ForgetPasswodView.dart';
+import 'package:e__commerce/Features/auth/presentation/Views/SignUpView.dart';
 import 'package:e__commerce/Features/auth/presentation/widgets/CustomEmailTextFormField.dart';
 import 'package:e__commerce/Features/auth/presentation/widgets/CustomPasswordTextFormField.dart';
 import 'package:e__commerce/Features/auth/presentation/widgets/SignUpWith.dart';
@@ -39,10 +41,9 @@ class _LoginViewState extends State<LoginView> {
     final double screenHieght = MediaQuery.of(context).size.height;
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
-        //  if (state is LoginSuccess || state is GoogleSignInSuccess) {
-        //   UserDataModel userDataModel = context.read<AuthenticationCubit>().userDataModel!;
-        //   navigateWithoutBack(context, MainHomeView(userDataModel: userDataModel,));
-        // }
+        if (state is LoginSuccess || state is GoogleSignInSuccess) {
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  MainHomeView()));
+        }
         if (state is LoginError) {
           showMsg(context, state.message);
         }
@@ -50,7 +51,7 @@ class _LoginViewState extends State<LoginView> {
       builder: (context, state) {
         AuthCubit authCubit = BlocProvider.of<AuthCubit>(context);
         return Scaffold(
-          body: state is LoginLoading
+          body: state is LoginLoading || state is GoogleSignInLoading
               ? const Center(
                   child: CircularProgressIndicator(
                   color: AppColors.kPrimaryColor,
@@ -112,6 +113,11 @@ class _LoginViewState extends State<LoginView> {
                                 children: [
                                   const Spacer(),
                                   GestureDetector(
+                                    onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ForgotPasswordView())),
                                     child: const Padding(
                                       padding: EdgeInsets.only(right: 10),
                                       child: Text(
@@ -127,9 +133,12 @@ class _LoginViewState extends State<LoginView> {
                               const SizedBox(
                                 height: 70,
                               ),
-                              const Padding(
+                               Padding(
                                 padding: EdgeInsets.all(15),
                                 child: SignUpWith(
+                                  onTap: (){
+                                    authCubit.googleSignIn();
+                                  },
                                   image: 'Assets/images/google.png',
                                   text: 'Login with Google',
                                 ),
@@ -150,6 +159,11 @@ class _LoginViewState extends State<LoginView> {
                                 height: 8,
                               ),
                               GestureDetector(
+                                onTap: () => Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                             SignUpView())),
                                 child: const Text(
                                   'Don\'t have account yet?',
                                   style: TextStyle(

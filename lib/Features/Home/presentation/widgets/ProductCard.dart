@@ -1,10 +1,8 @@
-
-import 'dart:developer';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e__commerce/Features/Home/data/models/ProductModel.dart';
+import 'package:e__commerce/Features/Home/presentation/Views/ProductDetails.dart';
 import 'package:e__commerce/Shared/CustomSmallButton.dart';
 import 'package:e__commerce/core/app_colors.dart';
-import 'package:e__commerce/core/cache_Image.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
@@ -12,7 +10,8 @@ class ProductCard extends StatelessWidget {
     required this.product,
     super.key,
     this.onTap,
-    required this.isFavorite,required this.onPaymentSuccess,
+    required this.isFavorite,
+    required this.onPaymentSuccess,
   });
   final ProductModel product;
   final Function()? onTap;
@@ -21,11 +20,12 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () => navigateTo(
-      //     context,
-      //     ProductDetailsView(
-      //       product: product,
-      //     )),
+      onTap: () =>Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProductDetailsView(product: product),
+        ),
+      ),  
       child: Card(
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(16)),
@@ -34,36 +34,44 @@ class ProductCard extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(16),
-                      bottomRight: Radius.circular(16),
-                      bottomLeft: Radius.circular(16),
-                    ),
-                    child: CaheImage(
-                      url: product.imageUrl ??
-                          "https://img.freepik.com/premium-psd/kitchen-product-podium-display-background_1101917-13418.jpg?w=900",
-                    ),
-                  ),
-                  Positioned(
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: 65,
-                      height: 35,
-                      decoration: const BoxDecoration(
-                          color: AppColors.kPrimaryColor,
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(16),
-                            bottomRight: Radius.circular(16),
-                          )),
-                      child: Text(
-                        "${product.sale}% OFF",
-                        style: const TextStyle(
-                          color: AppColors.kWhiteColor,
-                        ),
+                  Container(
+                    height: 280,
+                      width: double.infinity,
+                    child: ClipRRect(
+                      
+                      borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(16),
+                        bottomRight: Radius.circular(16),
+                        bottomLeft: Radius.circular(16),
+                      ),
+                      child: CachedNetworkImage(
+                        
+                        fit: BoxFit.cover,
+                        imageUrl: product.imageUrl!,
                       ),
                     ),
                   ),
+                  product.oldPrice != null
+                      ? Positioned(
+                          child: Container(
+                            alignment: Alignment.center,
+                            width: 65,
+                            height: 35,
+                            decoration: const BoxDecoration(
+                                color: AppColors.kPrimaryColor,
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(16),
+                                  bottomRight: Radius.circular(16),
+                                )),
+                            child: Text(
+                              "${product.sale}% OFF",
+                              style: const TextStyle(
+                                color: AppColors.kWhiteColor,
+                              ),
+                            ),
+                          ),
+                        )
+                      : const SizedBox(),
                 ],
               ),
               const SizedBox(
@@ -104,14 +112,16 @@ class ProductCard extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Text(
-                              "${product.oldPrice} LE",
-                              style: const TextStyle(
-                                decoration: TextDecoration.lineThrough,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.kGreyColor,
-                              ),
-                            ),
+                            product.oldPrice != null
+                                ? Text(
+                                    "${product.oldPrice} LE",
+                                    style: const TextStyle(
+                                      decoration: TextDecoration.lineThrough,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.kGreyColor,
+                                    ),
+                                  )
+                                : const SizedBox(),
                           ],
                         ),
                         CustomEBtn(
@@ -124,7 +134,6 @@ class ProductCard extends StatelessWidget {
                           //         onPaymentSuccess:onPaymentSuccess,
                           //         onPaymentError: () {
                           //            log("Payment Failure");
-
                           //         },
                           //         price:
                           //             double.parse(product.price!), // Required: Total price (e.g., 100 for 100 EGP)
@@ -132,7 +141,6 @@ class ProductCard extends StatelessWidget {
                           //     ),
                           //   );
                           // },
-                      
                         ),
                       ],
                     )

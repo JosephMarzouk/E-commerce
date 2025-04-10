@@ -22,9 +22,11 @@ final ApiService _apiServices = ApiService();
     
     emit(GetDataLoading());
     try {
-     Response response = await _apiServices.getData('products_table?select=*,favorite_products(*),purchase_table(*)');
+     Response response = await _apiServices.getData('https://asbxvyaxvraxpevngyjy.supabase.co/rest/v1/products_table');
         for (var product in response.data) {
         products.add(ProductModel.fromJson(product));
+        
+        
       }
 
       emit(GetDataSuccess());

@@ -3,7 +3,7 @@ import 'package:e__commerce/Features/Home/presentation/Views/ProductDetails.dart
 import 'package:e__commerce/Features/Home/presentation/widgets/ProductCard.dart';
 import 'package:e__commerce/core/CustomCircleProgIndicator.dart';
 import 'package:e__commerce/core/app_colors.dart';
-import 'package:e__commerce/Features/Home/data/cubit/product_data_cubit.dart';
+import 'package:e__commerce/Features/Home/data/cubit/ProductDataCubit/product_data_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,17 +25,13 @@ class RecentProductListView extends StatelessWidget {
           return 
           state is GetDataLoading  ? const CustomCircleProgIndicator() 
               :
+
           ListView.builder(
             itemBuilder: (count, index) {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ProductDetails()));
-                    },
+                    onTap: () {},
                     child: ProductCard(
                       product: products[index],
                       isFavorite: false,
@@ -43,7 +39,7 @@ class RecentProductListView extends StatelessWidget {
                     )),
               );
             },
-            itemCount: 5,
+            itemCount: products.length,
             physics: physics ?? const NeverScrollableScrollPhysics(),
             shrinkWrap: shrinkWrap ?? true,
           );

@@ -1,5 +1,7 @@
 
 import 'package:e__commerce/Features/Home/data/models/CategoryModel.dart';
+import 'package:e__commerce/Features/Home/presentation/Views/CategoryView.dart';
+import 'package:e__commerce/Shared/Functions/NavigateTo.dart';
 import 'package:e__commerce/core/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +21,7 @@ class CategoriesListView extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
-              //onTap: ()=> navigateTo(context,CategoryView(category: categories[index].text,)),
+              onTap: ()=> navigateTo(context,CategoryView(category: categories[index].text,)),
               child: Column(
                 children: [
                   CircleAvatar(
@@ -43,7 +45,7 @@ class CategoriesListView extends StatelessWidget {
 }
 
 List<Category> categories = [
-  Category(icon: Icons.sports, text: "Sports"),
+  Category(icon: Icons.sports, text: "Fitness"),
   Category(icon: Icons.tv, text: "Electronics"),
   Category(icon: Icons.collections, text: "Collections"),
   Category(icon: Icons.book, text: "Books"),

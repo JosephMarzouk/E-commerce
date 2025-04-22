@@ -79,4 +79,17 @@ class FeedBackCubit extends Cubit<FeedBackState> {
     }
   }
 
+
+Future <void> addComment(
+      {required String productId, required Map<String, dynamic> data}) async {
+    emit(AddCommentLoading());
+    try {
+      await _apiServices.postData("comments_table", data);
+      emit(AddCommentSuccess());
+    } catch (e) {
+      log(e.toString());
+      emit(AddCommentError());
+    }
+  }
+
 }

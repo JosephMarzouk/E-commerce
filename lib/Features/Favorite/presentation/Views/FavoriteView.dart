@@ -19,8 +19,8 @@ class FavoriteView extends StatelessWidget {
             ),
           ),
         ),
-        const CustomSearchbar(),
-        RecentProductListView(),
+       // const CustomSearchbar(),
+        RecentProductListView( isFavoriteView: true,),
         
       ],
     );

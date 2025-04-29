@@ -3,21 +3,32 @@ import 'package:e__commerce/Features/Home/presentation/Views/HomeView.dart';
 import 'package:e__commerce/Features/NavBar/data/manager/cubit/nav_bar_cubit.dart';
 import 'package:e__commerce/Features/Profile/presentation/Views/Profile.dart';
 import 'package:e__commerce/Features/Store/presentation/Views/StoreView.dart';
+import 'package:e__commerce/Features/auth/data/models/UserModel.dart';
 import 'package:e__commerce/core/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-class MainHomeView extends StatelessWidget {
-  MainHomeView({super.key});
+class MainHomeView extends StatefulWidget {
+  MainHomeView({super.key, required this.user});
+final UserDataModel user;
+  @override
+  State<MainHomeView> createState() => _MainHomeViewState();
+}
 
-  final List<Widget> _screens = [
-    const HomeView(),
+class _MainHomeViewState extends State<MainHomeView> {
+ late List<Widget> _screens;
+  @override
+  void initState() {
+     _screens = [
+     HomeView(user: widget.user,),
     const StoreView(),
     const FavoriteView(),
     const ProfileView(),
   ];
 
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NavBarCubit, NavBarState>(

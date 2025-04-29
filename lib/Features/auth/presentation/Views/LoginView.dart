@@ -1,6 +1,7 @@
 
 import 'package:e__commerce/Features/NavBar/presentation/Views/MainHomeView.dart';
 import 'package:e__commerce/Features/auth/data/cubit/AuthCubit/auth_cubit.dart';
+import 'package:e__commerce/Features/auth/data/models/UserModel.dart';
 import 'package:e__commerce/Features/auth/presentation/Views/ForgetPasswodView.dart';
 import 'package:e__commerce/Features/auth/presentation/Views/SignUpView.dart';
 import 'package:e__commerce/Features/auth/presentation/widgets/CustomEmailTextFormField.dart';
@@ -42,7 +43,8 @@ class _LoginViewState extends State<LoginView> {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is LoginSuccess || state is GoogleSignInSuccess) {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  MainHomeView()));
+            UserDataModel userDataModel = context.read<AuthCubit>().userDataModel!;
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  MainHomeView(user: userDataModel,)));
         }
         if (state is LoginError) {
           showMsg(context, state.message);

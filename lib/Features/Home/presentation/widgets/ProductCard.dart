@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e__commerce/Features/Home/data/models/ProductModel.dart';
 import 'package:e__commerce/Features/Home/presentation/Views/ProductDetailsView.dart';
 import 'package:e__commerce/Shared/CustomSmallButton.dart';
 import 'package:e__commerce/core/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:pay_with_paymob/pay_with_paymob.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
@@ -20,12 +23,12 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () =>Navigator.push(
+      onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ProductDetailsView(product: product),
         ),
-      ),  
+      ),
       child: Card(
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(16)),
@@ -36,16 +39,14 @@ class ProductCard extends StatelessWidget {
                 children: [
                   Container(
                     height: 280,
-                      width: double.infinity,
+                    width: double.infinity,
                     child: ClipRRect(
-                      
                       borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(16),
                         bottomRight: Radius.circular(16),
                         bottomLeft: Radius.circular(16),
                       ),
                       child: CachedNetworkImage(
-                        
                         fit: BoxFit.cover,
                         imageUrl: product.imageUrl!,
                       ),
@@ -126,21 +127,23 @@ class ProductCard extends StatelessWidget {
                         ),
                         CustomEBtn(
                           text: "Buy Now",
-                          // onTap: () {
-                          //   Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //       builder: (context) => PaymentView(
-                          //         onPaymentSuccess:onPaymentSuccess,
-                          //         onPaymentError: () {
-                          //            log("Payment Failure");
-                          //         },
-                          //         price:
-                          //             double.parse(product.price!), // Required: Total price (e.g., 100 for 100 EGP)
-                          //       ),
-                          //     ),
-                          //   );
-                          // },
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PaymentView(
+                                  onPaymentSuccess: () {
+                                    log("Sucesses");
+                                  },
+                                  onPaymentError: () {
+                                    log("Faild");
+                                  },
+                                  price:
+                                    double.parse(product.price!),
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     )

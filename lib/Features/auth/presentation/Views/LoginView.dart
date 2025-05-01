@@ -44,7 +44,7 @@ class _LoginViewState extends State<LoginView> {
       listener: (context, state) {
         if (state is LoginSuccess || state is GoogleSignInSuccess) {
             UserDataModel userDataModel = context.read<AuthCubit>().userDataModel!;
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  MainHomeView(user: userDataModel,)));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  MainHomeView()));
         }
         if (state is LoginError) {
           showMsg(context, state.message);

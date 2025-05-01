@@ -1,5 +1,7 @@
 
- import 'package:e__commerce/Features/Home/data/cubit/ProductDataCubit/product_data_cubit.dart';
+ import 'dart:developer';
+
+import 'package:e__commerce/Features/Home/data/cubit/ProductDataCubit/product_data_cubit.dart';
 import 'package:e__commerce/Features/Home/data/models/ProductModel.dart';
 import 'package:e__commerce/Features/Home/presentation/widgets/ProductCard.dart';
 import 'package:e__commerce/Shared/Functions/ShowMessageFunction.dart';
@@ -59,9 +61,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
                   itemCount: products.length,
                   itemBuilder: (context, index) {
                     return ProductCard(
-                      onPaymentSuccess: () {
-                        homeCubit.buyProduct(
+                      onPaymentSuccess: () async{
+                      await  homeCubit.buyProduct(
                             productId: products[index].productId!);
+                            log("Payment Success");
+                           // showMenu(context: context,)
                       },
                       isFavorite:
                           homeCubit.checkIsFavorite(products[index].productId!),

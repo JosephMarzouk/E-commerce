@@ -139,7 +139,7 @@ class ProductDataCubit extends Cubit<ProductDataState> {
   Future<void> buyProduct({required String productId}) async {
     emit(BuyProductLoading());
     try {
-      await _apiServices.postData("purchase_table", {
+      await _apiServices.postData("purchesed_products_table", {
         "for_user": userId,
         "is_bought": true,
         "for_product": productId,

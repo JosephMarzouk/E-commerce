@@ -18,6 +18,7 @@ class ProductCard extends StatelessWidget {
   });
   final ProductModel product;
   final Function()? onTap;
+  
   final VoidCallback onPaymentSuccess;
   final bool isFavorite;
   @override
@@ -132,9 +133,7 @@ class ProductCard extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => PaymentView(
-                                  onPaymentSuccess: () {
-                                    log("Sucesses");
-                                  },
+                                  onPaymentSuccess: onPaymentSuccess,
                                   onPaymentError: () {
                                     log("Faild");
                                   },

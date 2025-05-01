@@ -46,7 +46,7 @@ class _SignUpViewState extends State<SignUpView> {
         if (state is SignUpSuccess || state is GoogleSignInSuccess) {
            UserDataModel userDataModel = context.read<AuthCubit>().userDataModel!;
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => MainHomeView(user: userDataModel,)));
+              context, MaterialPageRoute(builder: (context) => MainHomeView()));
         }
         if (state is SignUpError) {
           showMsg(context, state.message);

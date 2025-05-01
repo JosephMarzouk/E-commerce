@@ -4,12 +4,15 @@ import 'package:e__commerce/Features/Home/presentation/widgets/RecentProductLIst
 import 'package:e__commerce/Features/auth/data/models/UserModel.dart';
 import 'package:e__commerce/core/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pay_with_paymob/pay_with_paymob.dart';
 
-class HomeView extends StatefulWidget {
-  const HomeView({super.key, required this.user});
+import '../../../auth/data/cubit/AuthCubit/auth_cubit.dart';
 
-final UserDataModel user ; 
+class HomeView extends StatefulWidget {
+  HomeView({super.key,});
+
+late UserDataModel user ; 
   @override
   State<HomeView> createState() => _HomeViewState();
 }
@@ -18,6 +21,7 @@ class _HomeViewState extends State<HomeView> {
 
    @override
   void initState() {
+    widget.user =context.read<AuthCubit>().userDataModel!;
     PaymentData.initialize(
       apiKey:
          Constants().apiKey, // Required: Found under Dashboard -> Settings -> Account Info -> API Key

@@ -2,7 +2,7 @@ import 'package:e__commerce/Features/Profile/presentation/Views/EditNameView.dar
 import 'package:e__commerce/Features/Profile/presentation/Views/MyOrdersView.dart';
 import 'package:e__commerce/Features/auth/data/cubit/AuthCubit/auth_cubit.dart';
 import 'package:e__commerce/Features/auth/data/models/UserModel.dart';
-import 'package:e__commerce/Features/auth/presentation/Views/LoginView.dart';
+import 'package:e__commerce/Features/auth/presentation/Views/AuthGate.dart';
 import 'package:e__commerce/Shared/CustomRowButton.dart';
 import 'package:e__commerce/core/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class ProfileView extends StatelessWidget {
       listener: (context, state) {
         if (state is LogOutSuccess) {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => LoginView()));
+              context, MaterialPageRoute(builder: (context) => const AuthGate()));
         }
       },
       builder: (context, state) {

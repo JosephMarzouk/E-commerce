@@ -20,7 +20,7 @@ class _MainHomeViewState extends State<MainHomeView> {
   @override
   void initState() {
      _screens = [
-     HomeView(),
+     const HomeView(),
     const StoreView(),
     const FavoriteView(),
     const ProfileView(),
@@ -34,14 +34,20 @@ class _MainHomeViewState extends State<MainHomeView> {
       builder: (context, state) {
         NavBarCubit cubit = context.read<NavBarCubit>();
         return Scaffold(
+          backgroundColor: AppColors.kScaffoldColor,
           body: SafeArea(
-              child: Padding(
-            padding: const EdgeInsets.all(8),
             child: _screens[cubit.currentIndex],
-          )),
+          ),
           bottomNavigationBar: Container(
-            decoration: const BoxDecoration(
-              color: AppColors.kWhiteColor,
+            decoration: BoxDecoration(
+              color: AppColors.kSurfaceColor,
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.kBlackColor.withValues(alpha: 0.06),
+                  blurRadius: 20,
+                  offset: const Offset(0, -4),
+                ),
+              ],
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(

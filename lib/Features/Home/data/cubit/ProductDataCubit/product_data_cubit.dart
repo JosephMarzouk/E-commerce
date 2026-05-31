@@ -14,7 +14,13 @@ part 'product_data_state.dart';
 class ProductDataCubit extends Cubit<ProductDataState> {
   ProductDataCubit() : super(ProductDataInitial());
   final ApiService _apiServices = ApiService();
-  final String userId = Supabase.instance.client.auth.currentUser!.id;
+  String get userId {
+    final id = Supabase.instance.client.auth.currentUser?.id;
+    if (id == null) {
+      throw StateError('User must be signed in to load products.');
+    }
+    return id;
+  }
 
   List<ProductModel> products = [];
   List<ProductModel> searchResults = [];
@@ -24,7 +30,7 @@ class ProductDataCubit extends Cubit<ProductDataState> {
     emit(GetDataLoading());
     try {
       Response response = await _apiServices.getData(
-          'https://asbxvyaxvraxpevngyjy.supabase.co/rest/v1/products_table?select=*,favorite_products(*)');
+          'https://gwhcryhwcxuafijsofqt.supabase.co/rest/v1/products?select=*,favorite_products(*)');
       for (var product in response.data) {
         products.add(ProductModel.fromJson(product));
       }

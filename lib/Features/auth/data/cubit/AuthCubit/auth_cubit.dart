@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:e__commerce/Features/auth/data/models/UserModel.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:meta/meta.dart';
+import 'package:e__commerce/core/demo_data.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'auth_state.dart';
@@ -12,19 +13,29 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
 
   SupabaseClient client = Supabase.instance.client;
+
+  void seedDemoGuest() {
+    userDataModel = kDemoGuest;
+    emit(GetUserDataSuccess());
+  }
   Future<void> login({required String email, required String password}) async {
     emit(LoginLoading());
     try {
-      await client.auth.signInWithPassword(password: password, email: email);
-
+      await client.auth.signInWithPassword(
+        password: password,
+        email: email.trim(),
+      );
+      await _loadOrCreateUserProfile();
       emit(LoginSuccess());
-       await getUserData();
     } on AuthException catch (e) {
       log(e.toString());
       emit(LoginError(e.message));
     } catch (e) {
       log(e.toString());
-      emit(LoginError(e.toString()));
+      emit(LoginError(
+        'Could not load your profile. If you created this account in Supabase, '
+        'make sure a row exists in the users table or try signing up from the app.',
+      ));
     }
   }
 
@@ -49,9 +60,11 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> LogOut() async {
+    if (kDemoMode) return;
     emit(LogOutLoading());
     try {
       await client.auth.signOut();
+      userDataModel = null;
       emit(LogOutSuccess());
     } on AuthException catch (e) {
       log(e.toString());
@@ -94,19 +107,74 @@ class AuthCubit extends Cubit<AuthState> {
 
 
   UserDataModel? userDataModel;
-  Future<void> getUserData() async {
-    emit(GetUserDataLoading());
-    try {
-      final List<Map<String, dynamic>> data = await client
+
+  Future<void> _loadOrCreateUserProfile() async {
+    final authUser = client.auth.currentUser;
+    if (authUser == null) {
+      throw const AuthException('Not signed in');
+    }
+
+    var data = await client
+        .from('users')
+        .select()
+        .eq('user_id', authUser.id);
+
+    if (data.isEmpty) {
+      final name = authUser.userMetadata?['user_name'] as String? ??
+          authUser.userMetadata?['name'] as String? ??
+          authUser.email?.split('@').first ??
+          'User';
+      final email = authUser.email ?? '';
+      await client.from('users').upsert({
+        'user_id': authUser.id,
+        'user_name': name,
+        'email': email,
+      });
+      data = await client
           .from('users')
           .select()
-          .eq("user_id", client.auth.currentUser!.id);
-      userDataModel = UserDataModel(
-          email: data[0]["email"],
-          name: data[0]["user_name"],
-          userId: data[0]["user_id"]);
+          .eq('user_id', authUser.id);
+    }
+
+    if (data.isEmpty) {
+      throw Exception('users table row missing');
+    }
+
+    userDataModel = UserDataModel(
+      email: data[0]['email'] as String,
+      name: data[0]['user_name'] as String,
+      userId: data[0]['user_id'] as String,
+    );
+  }
+
+  Future<void> restoreSession() async {
+    if (client.auth.currentUser == null) {
+      userDataModel = null;
+      emit(AuthInitial());
+      return;
+    }
+    emit(GetUserDataLoading());
+    try {
+      await _loadOrCreateUserProfile();
       emit(GetUserDataSuccess());
-      print(data);
+    } catch (e) {
+      log(e.toString());
+      await client.auth.signOut();
+      userDataModel = null;
+      emit(AuthInitial());
+    }
+  }
+
+  Future<void> getUserData() async {
+    if (client.auth.currentUser == null) {
+      userDataModel = null;
+      emit(AuthInitial());
+      return;
+    }
+    emit(GetUserDataLoading());
+    try {
+      await _loadOrCreateUserProfile();
+      emit(GetUserDataSuccess());
     } catch (e) {
       log(e.toString());
       emit(GetUserDataError());

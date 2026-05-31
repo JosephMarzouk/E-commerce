@@ -1,5 +1,6 @@
 import 'package:e__commerce/Features/Home/presentation/widgets/CustomSearchBar.dart';
 import 'package:e__commerce/Features/Home/presentation/widgets/RecentProductLIstView.dart';
+import 'package:e__commerce/core/demo_data.dart';
 import 'package:flutter/material.dart';
 
 class StoreView extends StatelessWidget {
@@ -9,8 +10,8 @@ class StoreView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        SizedBox(height: 20,),
-        Center(
+        const SizedBox(height: 20),
+        const Center(
           child: Text(
             'Welcome to the Store ☺️',
             style: TextStyle(
@@ -20,8 +21,9 @@ class StoreView extends StatelessWidget {
           ),
         ),
         const CustomSearchbar(),
-        RecentProductListView(),
-        
+        RecentProductListView(
+          demoProducts: kDemoMode ? kDemoProducts : null,
+        ),
       ],
     );
   }

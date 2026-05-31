@@ -1,5 +1,6 @@
 
 import 'package:e__commerce/Features/Home/presentation/widgets/RecentProductLIstView.dart';
+import 'package:e__commerce/core/demo_data.dart';
 import 'package:flutter/material.dart';
 
 class FavoriteView extends StatelessWidget {
@@ -20,7 +21,10 @@ class FavoriteView extends StatelessWidget {
           ),
         ),
        // const CustomSearchbar(),
-        RecentProductListView( isFavoriteView: true,),
+        RecentProductListView(
+          isFavoriteView: true,
+          demoProducts: kDemoMode ? [] : null,
+        ),
         
       ],
     );

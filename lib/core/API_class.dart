@@ -4,7 +4,7 @@ class ApiService {
   final Dio _dio = Dio(
     BaseOptions(
       baseUrl:
-          'https://asbxvyaxvraxpevngyjy.supabase.co/rest/v1/', 
+          'https://gwhcryhwcxuafijsofqt.supabase.co/rest/v1/', 
 
       headers: {
         'apikey':

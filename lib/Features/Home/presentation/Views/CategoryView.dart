@@ -1,5 +1,6 @@
 import 'package:e__commerce/Features/Home/presentation/widgets/RecentProductLIstView.dart';
 import 'package:e__commerce/Features/Profile/presentation/widgets/CustomAppBar.dart';
+import 'package:e__commerce/core/demo_data.dart';
 import 'package:flutter/material.dart';
 
 class CategoryView extends StatelessWidget {
@@ -17,6 +18,7 @@ class CategoryView extends StatelessWidget {
           ),
           RecentProductListView(
             category: category,
+            demoProducts: kDemoMode ? demoProductsByCategory(category) : null,
           ),
         ],
       ),

@@ -1,5 +1,5 @@
 
-import 'package:e__commerce/Features/NavBar/presentation/Views/MainHomeView.dart';
+import 'package:e__commerce/Features/auth/presentation/Views/AuthGate.dart';
 import 'package:e__commerce/Features/auth/data/cubit/AuthCubit/auth_cubit.dart';
 import 'package:e__commerce/Features/auth/data/models/UserModel.dart';
 import 'package:e__commerce/Features/auth/presentation/Views/ForgetPasswodView.dart';
@@ -43,11 +43,22 @@ class _LoginViewState extends State<LoginView> {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is LoginSuccess || state is GoogleSignInSuccess) {
-            UserDataModel userDataModel = context.read<AuthCubit>().userDataModel!;
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  MainHomeView()));
+          final profile = context.read<AuthCubit>().userDataModel;
+          if (profile != null) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const AuthGate()),
+            );
+          }
         }
         if (state is LoginError) {
           showMsg(context, state.message);
+        }
+        if (state is GetUserDataError) {
+          showMsg(
+            context,
+            'Signed in but profile data is missing. Add this user to the users table in Supabase.',
+          );
         }
       },
       builder: (context, state) {

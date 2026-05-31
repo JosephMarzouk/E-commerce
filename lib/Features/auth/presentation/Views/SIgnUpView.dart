@@ -1,4 +1,4 @@
-import 'package:e__commerce/Features/NavBar/presentation/Views/MainHomeView.dart';
+import 'package:e__commerce/Features/auth/presentation/Views/AuthGate.dart';
 import 'package:e__commerce/Features/Profile/presentation/widgets/CustomTextField.dart';
 import 'package:e__commerce/Features/auth/data/models/UserModel.dart';
 import 'package:e__commerce/Features/auth/presentation/widgets/CustomEmailTextFormField.dart';
@@ -44,9 +44,12 @@ class _SignUpViewState extends State<SignUpView> {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is SignUpSuccess || state is GoogleSignInSuccess) {
-           UserDataModel userDataModel = context.read<AuthCubit>().userDataModel!;
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => MainHomeView()));
+          if (context.read<AuthCubit>().userDataModel != null) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const AuthGate()),
+            );
+          }
         }
         if (state is SignUpError) {
           showMsg(context, state.message);
